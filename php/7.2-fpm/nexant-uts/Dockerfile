@@ -15,6 +15,9 @@ RUN apt-get update -y -q \
 && apt-get install -y --no-install-recommends fontconfig ttf-mscorefonts-installer \
 && fc-cache -f -v \
 
+# Install GPG
+&& apt-get install -y --no-install-recommends gnupg2 \
+
 # Install wkhtmltopdf
 && wget https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6-1/wkhtmltox_0.12.6-1.stretch_amd64.deb \
 && apt install -y ./wkhtmltox_0.12.6-1.stretch_amd64.deb \
