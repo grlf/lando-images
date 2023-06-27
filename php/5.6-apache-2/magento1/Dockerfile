@@ -1,11 +1,17 @@
-FROM devwithlando/php:5.6-fpm
+FROM devwithlando/php:5.6-apache-2
 
 #Update APT repo
 RUN echo "deb http://archive.debian.org/debian stretch main" > /etc/apt/sources.list
 
+#Fix postgres error in apt-update
+RUN rm /etc/apt/sources.list.d/pgdg.list \
+&& apt-get update && apt-get -y install apt-transport-https \
+&& echo "deb http://apt-archive.postgresql.org/pub/repos/apt/ stretch-pgdg main" > /etc/apt/sources.list.d/pgdg.list
+
+RUN cat /etc/apt/sources.list.d/pgdg.list
+
 # General
-RUN apt-get update -y -q \
-&& apt-get install -y -q nano \
+RUN apt-get install -y -q nano \
 && apt-get install -y -q libxslt-dev \
 && docker-php-ext-install xsl
 
